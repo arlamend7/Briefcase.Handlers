@@ -10,18 +10,18 @@ using System.Reflection;
 
 namespace Case.Handlers.Builder
 {
-    public class MapperConfigurationBuilder
-               : BuilderOf<MapperConfiguration>
+    internal class MapperConfigurationBuilder
+               : BuilderOf<MapperConfiguration>, IMapperConfigurationBuilder
     {
         private bool _ignoreDefaultValues = false;
 
-        public MapperConfigurationBuilder SetTypes(Type type, Type interactionType)
+        public IMapperConfigurationBuilder SetTypes(Type type, Type interactionType)
         {
             EditOn(x => x.Type, type);
             EditOn(x => x.InteractioType, interactionType);
             return this;
         }
-        public MapperConfigurationBuilder IgnoreAllDefaultValues()
+        public IMapperConfigurationBuilder IgnoreAllDefaultValues()
         {
             _ignoreDefaultValues = true;
             return this;
@@ -41,7 +41,7 @@ namespace Case.Handlers.Builder
                 if (propertyMapper != null)
                     continue;
                 else
-                    yield return new PropertyMapperBuilder()
+                    yield return new PropertyMapperConfigurationBuilder()
                                                 .SetProperty(requestProperty)
                                                 .IgnoreDefaultValue(_ignoreDefaultValues)
                                                 .Build();
@@ -50,7 +50,7 @@ namespace Case.Handlers.Builder
         }
     }
 
-    public class MapperConfigurationBuilder<T, TRequest>
+    internal class MapperConfigurationBuilder<T, TRequest>
         : MapperConfigurationBuilder, 
         IMapperConfigurationBuilder<T, TRequest>
     {

@@ -3,21 +3,20 @@ using Case.Handlers.Configurations;
 using Case.Handlers.Customizes.Interfaces;
 using Case.System.Builders;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Case.Handlers.Builder
 {
-    public class EditHandlerConfigurationBuilder : BuilderOf<EditHandlerConfiguration>
+    internal class EditHandlerConfigurationBuilder : BuilderOf<EditHandlerConfiguration>, IEditHandlerConfigurationBuilder
     {
-        public EditHandlerConfigurationBuilder SetMapper(MapperConfiguration mapper)
+        public IEditHandlerConfigurationBuilder SetMapper(MapperConfiguration mapper)
         {
             EditOn(x => x.EditMappers, mapper);
             return this;
         }
     }
 
-    public class EditHandlerConfigurationBuilder<T>
+    internal class EditHandlerConfigurationBuilder<T>
         : EditHandlerConfigurationBuilder, 
         IEditHandlerConfigurationBuilder<T> where T : class, new()
     {

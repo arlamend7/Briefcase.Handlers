@@ -3,30 +3,30 @@ using Case.Handlers.Configurations;
 using Case.System.Builders;
 using Case.System.Extensions;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Case.Handlers.Builder
 {
-    public class PropertyMapperBuilder
-                 : BuilderOf<PropertyMapperConfiguration>
+    internal class PropertyMapperConfigurationBuilder
+                 : BuilderOf<PropertyMapperConfiguration>, 
+        IPropertyMapperConfigurationBuilder
     {
         public bool Conclude => true;
 
-        public PropertyMapperBuilder SetMappedType(Type type)
+        public IPropertyMapperConfigurationBuilder SetMappedType(Type type)
         {
             EditOn(x => x.MappedType, type);
             return this;
         }
-        public PropertyMapperBuilder SetProperty(PropertyInfo property)
+        public IPropertyMapperConfigurationBuilder SetProperty(PropertyInfo property)
         {
             EditOn(x => x.Property, property);
             EditOn(x => x.MappedProperty, property);
             return this;
         }
 
-        public PropertyMapperBuilder IgnoreDefaultValue(bool ignore = false)
+        public IPropertyMapperConfigurationBuilder IgnoreDefaultValue(bool ignore = false)
         {
             if (ignore)
             {
@@ -35,8 +35,8 @@ namespace Case.Handlers.Builder
             return this;
         }
     }
-    public class PropertyMapperBuilder<T, TRequest, TProp>
-        : PropertyMapperBuilder,
+    internal class PropertyMapperBuilder<T, TRequest, TProp>
+        : PropertyMapperConfigurationBuilder,
         IPropertyMapperBuilder<T, TRequest, TProp>
     {
 
@@ -90,7 +90,7 @@ namespace Case.Handlers.Builder
             return true;
         }
     }
-    public class PropertyMapperConvertBuilder<T, TProp, TRequest, TRequestProp>
+    internal class PropertyMapperConvertBuilder<T, TProp, TRequest, TRequestProp>
         : BuilderOf<PropertyMapperConfiguration>,
         IPropertyMapperConvertBuilder<T, TProp, TRequest, TRequestProp>
     {
@@ -109,13 +109,13 @@ namespace Case.Handlers.Builder
             EditOn(x => x.IgnoreConditions, Value.IgnoreDefaultValueFuncMessage<TRequestProp>((x) => message));
             return this;
         }
-        public IPropertyMapperConvertBuilderConverted<T, TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(Func<TRequestProp, TAnotherType> converter, string errorMessage = null)
+        public IPropertyMapperConvertBuilderConverted<TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(Func<TRequestProp, TAnotherType> converter, string errorMessage = null)
         {
             EditOn(x => x.Converters, PropertyMapperConfiguration.ConvertToConvert(converter, (x) => errorMessage));
             return new PropertyMapperConvertBuilder<T, TProp, TAnotherType, TAnotherType>(this);       
         }
 
-        public IPropertyMapperConvertBuilderConverted<T, TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(Func<TRequestProp, TAnotherType> converter, Func<TRequestProp, string> message)
+        public IPropertyMapperConvertBuilderConverted<TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(Func<TRequestProp, TAnotherType> converter, Func<TRequestProp, string> message)
         {
             EditOn(x => x.Converters, PropertyMapperConfiguration.ConvertToConvert(converter, message));
             return new PropertyMapperConvertBuilder<T, TProp, TAnotherType, TAnotherType>(this);
@@ -140,13 +140,13 @@ namespace Case.Handlers.Builder
             return true;
         }
 
-        public IPropertyMapperConvertBuilderConverted<T, TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(System.Delegates.TryConvert<TRequestProp, TAnotherType> converter, Func<TRequestProp, string> message)
+        public IPropertyMapperConvertBuilderConverted<TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(System.Delegates.TryConvert<TRequestProp, TAnotherType> converter, Func<TRequestProp, string> message)
         {
             EditOn(x => x.Converters, PropertyMapperConfiguration.ConvertToConvert(converter, message));
             return new PropertyMapperConvertBuilder<T, TProp, TAnotherType, TAnotherType>(this);
         }
 
-        public IPropertyMapperConvertBuilderConverted<T, TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(System.Delegates.TryConvert<TRequestProp, TAnotherType> converter, string message)
+        public IPropertyMapperConvertBuilderConverted<TAnotherType, TAnotherType, TProp> ConvertUsing<TAnotherType>(System.Delegates.TryConvert<TRequestProp, TAnotherType> converter, string message)
         {
             EditOn(x => x.Converters, PropertyMapperConfiguration.ConvertToConvert(converter, (x) => message));
             return new PropertyMapperConvertBuilder<T, TProp, TAnotherType, TAnotherType>(this);        }

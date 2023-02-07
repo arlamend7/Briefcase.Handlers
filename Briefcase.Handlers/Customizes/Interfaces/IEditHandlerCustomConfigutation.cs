@@ -5,7 +5,7 @@ namespace Case.Handlers.Customizes.Interfaces
 {
     public interface IEditHandlerCustomConfigutation
     {
-        EditHandlerConfigurationBuilder Builder();
+        IEditHandlerConfigurationBuilder Builder();
     }
     public interface IEditHandlerCustomConfigutation<T> :
          IEditHandlerCustomConfigutation,

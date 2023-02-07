@@ -4,13 +4,12 @@ using Case.System.Builders;
 using Case.System.Extensions;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Case.Handlers.Builder
 {
-    public class PropertyConfigBuilder<T> : BuilderOf<PropertyConfiguration>
+    internal class PropertyConfigurationBuilder<T> : BuilderOf<PropertyConfiguration>
     {
         public PropertyConfiguration BuildWith(PropertyInfo property)
         {
@@ -21,8 +20,8 @@ namespace Case.Handlers.Builder
             return Value;
         }
     }
-    public class PropertyConfigBuilder<T, TProp>
-        : PropertyConfigBuilder<T>,
+    internal class PropertyConfigBuilder<T, TProp>
+        : PropertyConfigurationBuilder<T>,
         
         IPropertyConfigBuilder<T, TProp>,
         IPropertyConfigInfoBuilder<T, TProp>,

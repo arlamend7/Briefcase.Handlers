@@ -1,4 +1,5 @@
 ﻿using Case.Handlers.Builder;
+using Case.Handlers.Builder.Interfaces;
 using Case.Handlers.Customizes.Interfaces;
 using Case.Handlers.Interfaces;
 using System;
@@ -9,13 +10,13 @@ namespace Case.Handlers.Customizes
         IEditHandlerCustomConfigutation<T>
         where T : class, new()
     {
-        public virtual void ConfigureRules(EditHandlerConfigurationBuilder<T> builder) { }
+        public virtual void ConfigureRules(IEditHandlerConfigurationBuilder<T> builder) { }
 
         /// <summary>
         ///     Ignore all default values of all properties
         /// </summary>
         /// <param name="mapper"></param>
-        public virtual void ConfigureMapper(MapperConfigurationBuilder<T, T> mapper)
+        public virtual void ConfigureMapper(IMapperConfigurationBuilder<T, T> mapper)
         {
             mapper.IgnoreAllDefaultValues();
         }
@@ -29,7 +30,7 @@ namespace Case.Handlers.Customizes
 
         }
 
-        public EditHandlerConfigurationBuilder<T> Builder()
+        public IEditHandlerConfigurationBuilder<T> Builder()
         {
             var mapper = new MapperConfigurationBuilder<T, T>();
             ConfigureMapper(mapper);
@@ -40,7 +41,7 @@ namespace Case.Handlers.Customizes
             return builder;
         }
 
-        EditHandlerConfigurationBuilder IEditHandlerCustomConfigutation.Builder()
+        IEditHandlerConfigurationBuilder IEditHandlerCustomConfigutation.Builder()
         {
             return Builder();
         }
