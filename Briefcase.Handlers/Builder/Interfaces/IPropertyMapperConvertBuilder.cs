@@ -4,7 +4,7 @@ using System;
 namespace Case.Handlers.Builder.Interfaces
 {
     public interface IPropertyMapperConvertBuilder<T, TProp, TRequest, TRequestProp>
-        : IPropertyMapperConvertBuilderConverted<T, TRequestProp, TRequestProp, TProp>
+        : IPropertyMapperConvertBuilderConverted<TRequestProp, TRequestProp, TProp>
     {
         public bool UseSameValue => true;
         IPropertyMapperConvertBuilder<T, TProp, TRequest, TRequestProp> IgnoreIf(Func<TRequestProp, bool> ignoreCondition, string message = null);

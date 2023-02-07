@@ -1,10 +1,17 @@
 ﻿using Case.Handlers.Configurations;
+using Case.System.Builders.Interfaces;
 using System;
 using System.Linq.Expressions;
 
 namespace Case.Handlers.Builder.Interfaces
 {
-    public interface IMapperConfigurationBuilder<T, TRequest>
+    public interface IMapperConfigurationBuilder : IBuilderOf<MapperConfiguration>
+    {
+        IMapperConfigurationBuilder IgnoreAllDefaultValues();
+        IMapperConfigurationBuilder SetTypes(Type type, Type interactionType);
+    }
+
+    public interface IMapperConfigurationBuilder<T, TRequest> : IMapperConfigurationBuilder
     {
         /// <summary>
         ///     Set a configuration for a property of the entity based on the class that you are using to map
@@ -19,6 +26,6 @@ namespace Case.Handlers.Builder.Interfaces
         ///  It will ignore all default values for all not configurated properties
         /// </summary>
         /// <returns></returns>
-        IMapperConfigurationBuilder<T, TRequest> IgnoreAllDefaultValues();
+        new IMapperConfigurationBuilder<T, TRequest> IgnoreAllDefaultValues();
     }
 }

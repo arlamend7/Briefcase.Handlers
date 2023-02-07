@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Case.Handlers.Handleds
 {
-    public class HandledChangeDetail : HandledDetail,
+    internal class HandledChangeDetail : HandledDetail,
         IHandledChange
     {
         public object LastValue { get; }

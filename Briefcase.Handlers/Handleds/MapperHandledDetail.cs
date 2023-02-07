@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Case.Handlers.Handleds
 {
-    public abstract class MapperHandledDetail
+    internal abstract class MapperHandledDetail
         : HandledDetail, IMapperHandled
     {
         public Type MapperType { get; }

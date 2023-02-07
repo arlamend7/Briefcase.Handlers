@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Case.Handlers.Handleds
 {
-    public class MapperHandledChangeDetail
+    internal class MapperHandledChangeDetail
         : HandledChangeDetail, IMapperHandled, IHandledChange
     {
         public Type MapperType { get; }

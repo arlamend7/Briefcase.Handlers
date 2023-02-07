@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Case.Handlers.Handleds
 {
-    public class HandledDetail : IHandled
+    internal class HandledDetail : IHandled
     {
         public PropertyInfo Property { get; }
         public object Value { get; }
