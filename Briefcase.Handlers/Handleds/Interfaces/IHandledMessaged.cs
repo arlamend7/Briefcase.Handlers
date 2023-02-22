@@ -1,4 +1,4 @@
-﻿namespace Case.Handlers.Handleds.Interfaces
+﻿namespace Briefcase.Handlers.Handleds.Interfaces
 {
     public interface IHandledMessaged : IHandled
     {

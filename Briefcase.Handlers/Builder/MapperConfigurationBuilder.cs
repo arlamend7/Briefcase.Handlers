@@ -1,14 +1,14 @@
-﻿using Case.Handlers.Builder.Interfaces;
-using Case.Handlers.Configurations;
-using Case.System.Builders;
-using Case.System.Extensions;
+﻿using Briefcase.Handlers.Builder.Interfaces;
+using Briefcase.Handlers.Configurations;
+using Briefcase.System.Builders;
+using Briefcase.System.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Case.Handlers.Builder
+namespace Briefcase.Handlers.Builder
 {
     internal class MapperConfigurationBuilder
                : BuilderOf<MapperConfiguration>, IMapperConfigurationBuilder
@@ -51,10 +51,10 @@ namespace Case.Handlers.Builder
     }
 
     internal class MapperConfigurationBuilder<T, TRequest>
-        : MapperConfigurationBuilder, 
+        : MapperConfigurationBuilder,
         IMapperConfigurationBuilder<T, TRequest>
     {
-        public IMapperConfigurationBuilder<T, TRequest> ForProperty<TProp>(Expression<Func<T, TProp>> expression, Func<IPropertyMapperBuilder<T, TRequest, TProp>, bool> configurationMethod)
+        public IMapperConfigurationBuilder<T, TRequest> For<TProp>(Expression<Func<T, TProp>> expression, Func<IPropertyMapperBuilder<T, TRequest, TProp>, bool> configurationMethod)
         {
             var propertyName = expression.GetMemberName();
             if (Value.Properties?.Any(y => y.Property.Name == propertyName) ?? false)

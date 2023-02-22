@@ -1,9 +1,9 @@
-﻿using Case.System.Delegates;
+﻿using Briefcase.System.Delegates;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Case.Handlers.Configurations
+namespace Briefcase.Handlers.Configurations
 {
     public class PropertyMapperConfiguration
     {

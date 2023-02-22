@@ -1,16 +1,33 @@
-﻿using Case.Handlers.Builder.Interfaces;
-using Case.Handlers.Configurations;
-using Case.System.Builders;
-using Case.System.Extensions;
+﻿using Briefcase.Handlers.Builder.Interfaces;
+using Briefcase.Handlers.Configurations;
+using Briefcase.System.Builders;
+using Briefcase.System.Extensions;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Case.Handlers.Builder
+namespace Briefcase.Handlers.Builder
 {
     internal class PropertyConfigurationBuilder<T> : BuilderOf<PropertyConfiguration>
     {
+
+        public PropertyConfigurationBuilder<T> ForMember(string propertyName, string description = null)
+        {
+            var property = typeof(T).GetProperty(propertyName);
+            description ??= property.GetCustomAttribute<DescriptionAttribute>()?.Description;
+
+            EditOn(x => x.PropertyInfo, property);
+            EditOn(x => x.Description, description);
+            return this;
+        }
+
+        public bool Ignore()
+        {
+            EditOn(x => x.Ignore, true);
+            return true;
+        }
+
         public PropertyConfiguration BuildWith(PropertyInfo property)
         {
             var description = property.GetCustomAttribute<DescriptionAttribute>()?.Description;
@@ -20,21 +37,14 @@ namespace Case.Handlers.Builder
             return Value;
         }
     }
-    internal class PropertyConfigBuilder<T, TProp>
+    internal class PropertyConfigurationBuilder<T, TProp>
         : PropertyConfigurationBuilder<T>,
-        
+
         IPropertyConfigBuilder<T, TProp>,
         IPropertyConfigInfoBuilder<T, TProp>,
         IPropertyConfigNoPropertyBuilder<T, TProp>
         where T : new()
     {
-
-        public bool Ignore()
-        {
-            EditOn(x => x.Ignore, true);
-            return true;
-        }
-
         public IPropertyConfigInfoBuilder<T, TProp> ForMember(Expression<Func<T, TProp>> expression, string description = null)
         {
             var property = typeof(T).GetProperty(expression.GetMemberName());
@@ -57,7 +67,7 @@ namespace Case.Handlers.Builder
 
         public IPropertyConfigBuilder<T, TProp> ThrowErrorIfValueIs(TProp value, string errorMessage = null)
         {
-            Func<T, TProp, bool> thowErrorFun = (entity, prop) => (value == null && prop == null) || value.Equals(prop);
+            Func<T, TProp, bool> thowErrorFun = (entity, prop) => value == null && prop == null || value.Equals(prop);
             return ThrowErrorIf(thowErrorFun, errorMessage);
         }
 
@@ -86,14 +96,21 @@ namespace Case.Handlers.Builder
 
         public IPropertyConfigBuilder<T, TProp> IgnoreIfValueIs(TProp value)
         {
-            Func<object, bool> ignoreValue = (x) => (value == null && x == null) || value.Equals(x);
+            Func<object, object, bool> ignoreValue = (entity, x) => value == null && x == null || value.Equals(x);
             EditOn(x => x.IgnoreConditions, ignoreValue);
             return this;
         }
 
         public IPropertyConfigBuilder<T, TProp> IgnoreIf(Func<TProp, bool> ignore)
         {
-            Func<object, bool> ignoreCondition = (x) => ignore((TProp)x);
+            Func<object, object, bool> ignoreCondition = (entity, x) => ignore((TProp)x);
+            EditOn(x => x.IgnoreConditions, ignoreCondition);
+            return this;
+        }
+
+        public IPropertyConfigBuilder<T, TProp> IgnoreIf(Func<T, TProp, bool> ignore)
+        {
+            Func<object, object, bool> ignoreCondition = (entity, x) => ignore((T)entity, (TProp)x);
             EditOn(x => x.IgnoreConditions, ignoreCondition);
             return this;
         }
