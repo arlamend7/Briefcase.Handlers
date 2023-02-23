@@ -33,7 +33,7 @@ namespace Briefcase.Handlers.Operations.Base
         {
             if (dictionary.TryGetValue(property, out var result))
             {
-                return JoinChangeDetail(new KeyValuePair<PropertyInfo, IResultAsync<IHandled>>(property, result));
+                return JoinChangeDetail(new KeyValuePair<PropertyInfo, IInteractable<IHandled>>(property, result));
             }
             return null;
         }
@@ -44,7 +44,7 @@ namespace Briefcase.Handlers.Operations.Base
             return GetChangeFor(property);
         }
 
-        private IHandledChange JoinChangeDetail(KeyValuePair<PropertyInfo, IResultAsync<IHandled>> item)
+        private IHandledChange JoinChangeDetail(KeyValuePair<PropertyInfo, IInteractable<IHandled>> item)
         {
             var handledChange = item.Value.FirstOrDefault(x => x.ChangedProperty) as IHandledChange;
             if (handledChange != null)

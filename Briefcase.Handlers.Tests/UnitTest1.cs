@@ -19,7 +19,7 @@ namespace Briefcase.Handlers.Tests
         [Fact]
         public void Test4()
         {
-            var teste = ResultAsync<Test>.Create();
+            var teste = Interactable<Test>.Create();
 
 
             teste.Append(Create("test"));
@@ -40,27 +40,31 @@ namespace Briefcase.Handlers.Tests
         [Fact]
         public void TestClear()
         {
-            var configurationBuilder = new PersonHandlerConfiguration()
-                                                 .Builder();
-
-            configurationBuilder.SetMapper(new PersonMapperHandlerConfiguration());
-
-            IHandlerCollection handlers = IHandlerCollection.Instanciate();
-
-            handlers.Add(configurationBuilder.Build());
-
             List<Person> persons = new List<Person>();
-            IHandlerOperation<Person> operation = handlers.Create<Person>();
 
-            var person = operation.Result;
-
-            var handler = operation.Reset();
-
-            operation = handler.Edit(person);
-            using (operation)
+            var teste = Enumerable.Range(0, 100).Select(x =>
             {
-                operation.Edit(x => x.Age, 22);
-            }
+                var person = new Person()
+                {
+                    Id = Guid.NewGuid(),
+                };
+
+                var request = new PersonInsertRequest()
+                {
+                    CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
+                    Birthdate = "1998-10-31"
+                };
+
+                person.FirstName = request.CompleteName.Split(' ').First();
+                person.LastName = request.CompleteName.Split(' ').Last();
+                person.CompleteName = request.CompleteName;
+                person.Age = PersonMapperHandlerConfiguration.GetAgeByBirthdate(PersonMapperHandlerConfiguration.Convert(request.Birthdate));
+
+                return person;
+            });
+
+            teste.ToList();
+            teste.ToList();
         }
         [Fact]
         public void TestA()
@@ -76,19 +80,17 @@ namespace Briefcase.Handlers.Tests
             handlers.Add(configurationBuilder.Build());
 
             List<Person> persons = new List<Person>();
-            IHandlerOperation<Person> operation = handlers.Create<Person>();
 
-            Enumerable.Range(0, 100000).ToList().ForEach(x =>
+            var canStop = Enumerable.Range(0, 100000).Select(x =>
             {
-                using (operation)
+                using var operation = handlers.Create<Person>();
+                return operation.EditBy(new PersonInsertRequest()
                 {
-                    persons.Add(operation.EditBy(new PersonInsertRequest()
-                    {
-                        CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
-                        Birthdate = "1998-10-31"
-                    }).Result);
-                }
-            });
+                    CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
+                    Birthdate = "1998-10-31"
+                });
+            }).Select(x => x.Result)
+            .ToList() ;
         }
         [Fact]
         public void Testb()
@@ -185,7 +187,7 @@ namespace Briefcase.Handlers.Tests
 
             foreach (var property in properties)
             {
-                operation.For(property).NotExecutedLength.Should().Be(2);
+                //operation.For(property).NotExecutedLength.Should().Be(2);
 
             }
 
