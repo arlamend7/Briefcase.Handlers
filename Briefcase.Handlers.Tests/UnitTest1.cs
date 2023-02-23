@@ -2,7 +2,6 @@ using Briefcase.Handlers.Handleds.Interfaces;
 using Briefcase.Handlers.Injection;
 using Briefcase.Handlers.Interfaces;
 using Briefcase.System.Asyncronuos;
-using Briefcase.System.Extensions;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using static Briefcase.Handlers.Tests.Data.DataTest;
@@ -90,7 +89,7 @@ namespace Briefcase.Handlers.Tests
                     Birthdate = "1998-10-31"
                 });
             }).Select(x => x.Result)
-            .ToList() ;
+            .ToList();
         }
         [Fact]
         public void Testb()
