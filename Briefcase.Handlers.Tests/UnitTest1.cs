@@ -80,16 +80,17 @@ namespace Briefcase.Handlers.Tests
 
             List<Person> persons = new List<Person>();
 
-            var canStop = Enumerable.Range(0, 100000).Select(x =>
+            var operation = handlers.Create<Person>();
+
+            var teste = Enumerable.Range(0, 100000).AsParallel().Select(x =>
             {
-                using var operation = handlers.Create<Person>();
-                return operation.EditBy(new PersonInsertRequest()
-                {
-                    CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
-                    Birthdate = "1998-10-31"
-                });
-            }).Select(x => x.Result)
-            .ToList();
+                return handlers.Create<Person>()
+                    .EditBy(new PersonInsertRequest()
+                    {
+                        CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
+                        Birthdate = "1998-10-31"
+                    }).Result;
+            }).ToList();
         }
         [Fact]
         public void Testb()
@@ -136,15 +137,13 @@ namespace Briefcase.Handlers.Tests
 
             foreach (var item in Enumerable.Range(0, 100000))
             {
-                using (operation)
-                {
-                    operation.EditBy(new PersonInsertRequest()
+                handlers.Create<Person>()
+                    .EditBy(new PersonInsertRequest()
                     {
                         CompleteName = $"Arlan dos Santos Franklin Mendes{item}",
                         Birthdate = "1998-10-31"
                     }).Any(x => x.IsError);
 
-                }
             }
         }
         [Fact]
@@ -161,7 +160,7 @@ namespace Briefcase.Handlers.Tests
 
             IHandler<Person> personHandler = handlers.Get<Person>();
 
-            using IHandlerOperation<Person> operation = personHandler.Create();
+            IHandlerOperation<Person> operation = personHandler.Create();
 
             var id = Guid.NewGuid();
             operation.Edit(x =>
@@ -232,7 +231,7 @@ namespace Briefcase.Handlers.Tests
 
             handlers.Should().NotBeNull();
 
-            using var operation = handlers.Create<Person>();
+            var operation = handlers.Create<Person>();
 
             operation.Result.Id.Should().NotBeNull();
             operation.Should().NotBeNull();
@@ -247,7 +246,7 @@ namespace Briefcase.Handlers.Tests
 
             IHandler handlers = serviceProvider.GetService<IHandler>();
 
-            using IHandlerOperation<TesteEntity> operation = handlers.Create<TesteEntity>();
+            IHandlerOperation<TesteEntity> operation = handlers.Create<TesteEntity>();
 
             operation.Edit(x =>
             {

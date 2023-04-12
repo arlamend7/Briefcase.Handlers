@@ -12,10 +12,5 @@ namespace Briefcase.Handlers.Interfaces
         IHandlerOperation<T> Edit(Action<T> request);
         IHandlerOperation<T> EditBy(Type type, object request);
         IHandlerOperation<T> EditBy<TRequest>(TRequest request);
-        IHandler<T> Reset()
-        {
-            this.Dispose();
-            return (IHandler<T>)this;
-        }
     }
 }

@@ -11,6 +11,8 @@ using System.Reflection;
 namespace Briefcase.Handlers.Operations.Base
 {
     internal abstract class HandlerResultOrdenableChanges<T> : HandlerResultChanges<T>, IHandlerResultOrdenableChanges<T>
+                where T : class, new()
+
     {
         public IEnumerable<IHandled> Values => OrdernedValues();
         public IEnumerable<IHandledChange> Changes => GetOrderOfExecution().Select(GetChangeFor);

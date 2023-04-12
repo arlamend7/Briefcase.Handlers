@@ -10,6 +10,8 @@ using System.Reflection;
 namespace Briefcase.Handlers.Operations.Base
 {
     internal abstract class HandlerOperationBase<T> : HandlerResultTimeLiner<T>
+                where T : class, new()
+
     {
         protected readonly HandlerConfiguration _handlerConfiguration;
         public HandlerOperationBase(HandlerConfiguration editHandler, T entity) : base(entity)
@@ -75,7 +77,7 @@ namespace Briefcase.Handlers.Operations.Base
             if (!Try(() => property.SetValue(Entity, value), out message))
                 return creator.StopedOn(value, HandledStopStageEnum.SetValue, message);
 
-            propertyStartValues.TryAdd(property, lastValue);
+            propertyStartValues.Add(property, lastValue);
 
             return creator.Successfully(value, lastValue);
         }

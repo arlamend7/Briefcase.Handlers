@@ -14,6 +14,8 @@ namespace Briefcase.Handlers.Operations.Base
     internal abstract class HandlerResultChanges<T>
         : HandlerResult<T>,
         IHandlerResultChanges<T>
+                where T : class, new()
+
     {
 
         protected HandlerResultChanges(T entity) : base(entity)
@@ -49,7 +51,7 @@ namespace Briefcase.Handlers.Operations.Base
             var handledChange = item.Value.FirstOrDefault(x => x.ChangedProperty) as IHandledChange;
             if (handledChange != null)
             {
-                return new HandledChangeDetail(item.Key, handledChange.Value, handledChange.OriginalValue, propertyStartValues.GetValueOrDefault(item.Key));
+                return new HandledChangeDetail(item.Key, handledChange.Value, handledChange.OriginalValue, propertyStartValues[item.Key]);
             }
             return null;
         }

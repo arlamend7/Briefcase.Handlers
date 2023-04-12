@@ -10,6 +10,8 @@ using System.Reflection;
 namespace Briefcase.Handlers.Operations.Base
 {
     internal abstract class HandlerResultTimeLiner<T> : HandlerResultOrdenableChanges<T>, IHandlerResultTimeLiner<T>
+                where T : class, new()
+
     {
         public T Result => GetResultFor(Changes);
         public HandlerResultTimeLiner(T entity) : base(entity)

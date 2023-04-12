@@ -11,14 +11,14 @@ using System.Reflection;
 namespace Briefcase.Handlers.Operations.Base
 {
     internal abstract class HandlerResult<T> : 
-        IDisposable,
         IHandlerResult<T>
+        where T : class, new()
     {
         public IEnumerable<PropertyInfo> EditedProperties => dictionary.Keys;
 
         protected T Entity { get; set; }
-        protected Dictionary<PropertyInfo, IInteractableCreator<IHandled>> dictionary;
-        protected Dictionary<PropertyInfo, object> propertyStartValues;
+        protected IDictionary<PropertyInfo, IInteractableCreator<IHandled>> dictionary;
+        protected IDictionary<PropertyInfo, object> propertyStartValues;
 
         public HandlerResult(T entity)
         {
@@ -33,20 +33,15 @@ namespace Briefcase.Handlers.Operations.Base
         }
         public IInteractable<IHandled> For(PropertyInfo property)
         {
-            if (dictionary.TryGetValue(property, out var result))
-            {
-                return result;
-            }
-            return null;
+            if (property is null)
+                return null;
+
+            return dictionary[property];
         }
 
-        public IInteractable<IHandled> For(string property)
+        public IInteractable<IHandled> For(string propertyName)
         {
-            if (dictionary.TryGetValue(typeof(T).GetProperty(property), out var result))
-            {
-                return result;
-            }
-            return null;
+            return For(typeof(T).GetProperty(propertyName));
         }
 
         protected void Add(PropertyInfo propertyInfo, Func<IHandled> func)
@@ -59,7 +54,7 @@ namespace Briefcase.Handlers.Operations.Base
             {
                 IInteractableCreator<IHandled> resultAsync = Interactable<IHandled>.Create();
                 resultAsync.Prepend(func);
-                dictionary.Add(propertyInfo, resultAsync);
+                dictionary[propertyInfo] = resultAsync;
             }
         }
         protected void Add(PropertyInfo propertyInfo, IHandled handled)
@@ -72,13 +67,14 @@ namespace Briefcase.Handlers.Operations.Base
             {
                 IInteractableCreator<IHandled> resultAsync = Interactable<IHandled>.Create();
                 resultAsync.Prepend(handled);
-                dictionary.Add(propertyInfo, resultAsync);
+                dictionary[propertyInfo] =  resultAsync;
             }
         }
 
         public virtual void Dispose()
         {
-            dictionary =new Dictionary<PropertyInfo, IInteractableCreator<IHandled>>();
+            Entity = new T();
+            dictionary = new Dictionary<PropertyInfo, IInteractableCreator<IHandled>>();
             propertyStartValues = new Dictionary<PropertyInfo, object>();
         }
     }
