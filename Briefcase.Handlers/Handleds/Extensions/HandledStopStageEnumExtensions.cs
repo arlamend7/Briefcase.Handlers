@@ -1,12 +1,12 @@
-﻿using Case.Handlers.Handleds.Enums;
+﻿using Briefcase.Handlers.Handleds.Enums;
 
-namespace Case.Handlers.Handleds.Extensions
+namespace Briefcase.Handlers.Handleds.Extensions
 {
     public static class HandledStopStageEnumExtensions
     {
         public static bool IsIgnored(this HandledStopStageEnum stoped)
         {
-            if(stoped is HandledStopStageEnum.IgnoreOnMapping 
+            if (stoped is HandledStopStageEnum.IgnoreOnMapping
             || stoped is HandledStopStageEnum.IgnoreAfterConvert
             || stoped is HandledStopStageEnum.IgnoreBeforeConvert
             || stoped is HandledStopStageEnum.IgnoreAfterSet)

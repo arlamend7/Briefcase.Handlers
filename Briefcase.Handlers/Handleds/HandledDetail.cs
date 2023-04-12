@@ -1,8 +1,8 @@
-﻿using Case.Handlers.Handleds.Enums;
-using Case.Handlers.Handleds.Interfaces;
+﻿using Briefcase.Handlers.Handleds.Enums;
+using Briefcase.Handlers.Handleds.Interfaces;
 using System.Reflection;
 
-namespace Case.Handlers.Handleds
+namespace Briefcase.Handlers.Handleds
 {
     internal class HandledDetail : IHandled
     {

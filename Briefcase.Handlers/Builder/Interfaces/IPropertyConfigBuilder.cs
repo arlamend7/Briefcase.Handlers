@@ -1,7 +1,6 @@
-﻿using Case.System.Builders.Interfaces;
-using System;
+﻿using System;
 
-namespace Case.Handlers.Builder.Interfaces
+namespace Briefcase.Handlers.Builder.Interfaces
 {
     public interface IPropertyConfigBuilder<T, TProp>
     {
@@ -13,5 +12,6 @@ namespace Case.Handlers.Builder.Interfaces
         IPropertyConfigBuilder<T, TProp> ThrowErrorIfValueIs(TProp value, string errorMessage = null);
         IPropertyConfigBuilder<T, TProp> IgnoreIfValueIs(TProp ignore);
         IPropertyConfigBuilder<T, TProp> IgnoreIf(Func<TProp, bool> ignore);
+        IPropertyConfigBuilder<T, TProp> IgnoreIf(Func<T, TProp, bool> ignore);
     }
 }

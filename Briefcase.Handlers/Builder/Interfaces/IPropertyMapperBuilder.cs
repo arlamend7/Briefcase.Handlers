@@ -1,8 +1,8 @@
-﻿using Case.Handlers.Configurations;
+﻿using Briefcase.Handlers.Configurations;
 using System;
 using System.Linq.Expressions;
 
-namespace Case.Handlers.Builder.Interfaces
+namespace Briefcase.Handlers.Builder.Interfaces
 {
     public interface IPropertyMapperBuilder<TProp>
     {

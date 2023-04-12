@@ -1,4 +1,4 @@
-﻿namespace Case.Handlers.Handleds.Enums
+﻿namespace Briefcase.Handlers.Handleds.Enums
 {
     public enum HandledStopStageEnum
     {

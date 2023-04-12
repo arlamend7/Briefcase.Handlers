@@ -1,13 +1,13 @@
-﻿using Case.Handlers.Configurations;
-using Case.Handlers.Handleds.Creators.Interfaces;
-using Case.Handlers.Handleds.Enums;
-using Case.Handlers.Handleds.Interfaces;
+﻿using Briefcase.Handlers.Configurations;
+using Briefcase.Handlers.Handleds.Creators.Interfaces;
+using Briefcase.Handlers.Handleds.Enums;
+using Briefcase.Handlers.Handleds.Interfaces;
 using System;
 using System.Reflection;
 
-namespace Case.Handlers.Handleds.Creators
+namespace Briefcase.Handlers.Handleds.Creators
 {
-    public class HandledCreator : IHandledCreator
+    internal class HandledCreator : IHandledCreator
     {
         private Type MappedType { get; }
         private PropertyInfo MappedProperty { get; }
@@ -42,8 +42,8 @@ namespace Case.Handlers.Handleds.Creators
             {
                 if (message is null)
                     return new HandledDetail(Property, value, stopedEnum, Value);
-                if(MappedType is null)
-                    return new HandledMessagedDetail(Property, Value, stopedEnum, value ,message);
+                if (MappedType is null)
+                    return new HandledMessagedDetail(Property, Value, stopedEnum, value, message);
                 return new MapperHandledMessagedDetail(MappedType, MappedProperty, Value, Property, value, stopedEnum, message);
             });
         }
@@ -61,7 +61,7 @@ namespace Case.Handlers.Handleds.Creators
             return CreateAndDispose(() =>
             {
                 if (MappedType is null)
-                    return new HandledChangeDetail(Property, value,  Value, lastValue);
+                    return new HandledChangeDetail(Property, value, Value, lastValue);
                 return new MapperHandledChangeDetail(MappedType, MappedProperty, Value, Property, value, lastValue);
             });
         }

@@ -1,9 +1,9 @@
-﻿using Case.Handlers.Configurations;
-using Case.Handlers.Handleds.Enums;
-using Case.Handlers.Handleds.Interfaces;
+﻿using Briefcase.Handlers.Handleds.Enums;
+using Briefcase.Handlers.Handleds.Interfaces;
+using Briefcase.Handlers.Configurations;
 using System;
 
-namespace Case.Handlers.Handleds.Creators.Interfaces
+namespace Briefcase.Handlers.Handleds.Creators.Interfaces
 {
     public interface IHandledCreator : IDisposable
     {
