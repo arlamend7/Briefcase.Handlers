@@ -1,7 +1,7 @@
-﻿using Case.System.Delegates;
+﻿using Briefcase.System.Delegates;
 using System;
 
-namespace Case.Handlers.Builder.Interfaces
+namespace Briefcase.Handlers.Builder.Interfaces
 {
     public interface IPropertyMapperConvertBuilderConverted<TRequest, TRequestProp, TProp>
     {

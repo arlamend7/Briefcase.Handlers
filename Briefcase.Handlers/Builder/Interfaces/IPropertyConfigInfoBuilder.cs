@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Case.Handlers.Builder.Interfaces
+namespace Briefcase.Handlers.Builder.Interfaces
 {
     public interface IPropertyConfigInfoBuilder<T, TProp>
         : IPropertyConfigBuilder<T, TProp>

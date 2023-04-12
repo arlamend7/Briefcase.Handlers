@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Case.Handlers.Configurations
+namespace Briefcase.Handlers.Configurations
 {
     public class MapperConfiguration
     {

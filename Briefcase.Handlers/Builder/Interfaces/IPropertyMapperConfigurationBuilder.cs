@@ -1,9 +1,9 @@
-﻿using Case.Handlers.Configurations;
-using Case.System.Builders.Interfaces;
+﻿using Briefcase.Handlers.Configurations;
+using Briefcase.System.Builders.Interfaces;
 using System;
 using System.Reflection;
 
-namespace Case.Handlers.Builder
+namespace Briefcase.Handlers.Builder.Interfaces
 {
     internal interface IPropertyMapperConfigurationBuilder : IBuilderOf<PropertyMapperConfiguration>
     {
