@@ -9,12 +9,12 @@
 		<RepositoryUrl>https://github.com/arlamend7/Briefcase</RepositoryUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\Briefcase.System\Briefcase.System\Briefcase.System.csproj" />
-	</ItemGroup>
 	<Target Name="Configurator" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe" ContinueOnError="true" />
 	</Target>
+	<ItemGroup>
+	  <PackageReference Include="Briefcase.System" Version="0.1.5" />
+	</ItemGroup>
 	<!--<Target Name="docfier" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe"  ContinueOnError="true" />
 	</Target>-->
