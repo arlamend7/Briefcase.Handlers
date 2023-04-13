@@ -50,8 +50,8 @@ namespace Briefcase.Handlers.Injection
                 var interfaceImplementation = interfaces.Single();
                 var parameters = interfaceImplementation.GenericTypeArguments;
                 services
-                    .AddScoped(interfaceImplementation, type)
-                    .AddScoped(typeof(HandlerConfiguration<>).MakeGenericType(parameters), x => editHandlerConfiguration(interfaceImplementation, x, parameters[0]));
+                    .AddSingleton(interfaceImplementation, type)
+                    .AddSingleton(typeof(HandlerConfiguration<>).MakeGenericType(parameters), x => editHandlerConfiguration(interfaceImplementation, x, parameters[0]));
             }
             return services;
         }
@@ -77,8 +77,8 @@ namespace Briefcase.Handlers.Injection
                 foreach (var item in interfaces)
                 {
                     services
-                        .AddScoped(item, type)
-                        .AddScoped(typeof(MapperConfiguration), x => mapperBuilderFunc(item, x));
+                        .AddSingleton(item, type)
+                        .AddSingleton(typeof(MapperConfiguration), x => mapperBuilderFunc(item, x));
                 }
             }
 
