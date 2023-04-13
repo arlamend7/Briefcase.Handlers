@@ -22,8 +22,11 @@ namespace Briefcase.Handlers.Builder
         public IPropertyMapperConfigurationBuilder SetProperty(PropertyInfo property)
         {
             EditOn(x => x.Property, property);
+            return this;
+        }
+        public IPropertyMapperConfigurationBuilder SetMappedProperty(PropertyInfo property)
+        {
             EditOn(x => x.MappedProperty, property);
-            EditOn(x => x.MappedType, property.DeclaringType);
             return this;
         }
 

@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<VersionPrefix>0.1.3</VersionPrefix>
+		<VersionPrefix>0.1.4</VersionPrefix>
 		<Title>$(AssemblyName)</Title>
 		<Company>arlamend7</Company>
 		<PackageProjectUrl>https://github.com/arlamend7/Briefcase</PackageProjectUrl>
@@ -13,7 +13,7 @@
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe" ContinueOnError="true" />
 	</Target>
 	<ItemGroup>
-	  <PackageReference Include="Briefcase.System" Version="0.1.5" />
+	  <ProjectReference Include="..\..\Briefcase.System\Briefcase.System\Briefcase.System.csproj" />
 	</ItemGroup>
 	<!--<Target Name="docfier" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe"  ContinueOnError="true" />
