@@ -149,14 +149,7 @@ namespace Briefcase.Handlers.Tests
         [Fact]
         public void Test1()
         {
-            var configurationBuilder = new PersonHandlerConfiguration()
-                                      .Builder();
-
-            configurationBuilder.SetMapper(new PersonMapperHandlerConfiguration());
-
-            IHandlerCollection handlers = IHandlerCollection.Instanciate();
-
-            handlers.Add(configurationBuilder.Build());
+        2
 
             IHandler<Person> personHandler = handlers.Get<Person>();
 

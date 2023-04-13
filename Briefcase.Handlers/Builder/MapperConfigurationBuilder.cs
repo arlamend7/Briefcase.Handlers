@@ -35,14 +35,16 @@ namespace Briefcase.Handlers.Builder
 
                 if (propertyInfo == null)
                     continue;
-
+                
                 var propertyMapper = Value.Properties?.FirstOrDefault(x => x.Property.Name == requestProperty.Name &&
-                                                                                   x.Property.PropertyType == requestProperty.PropertyType);
+                                                                           x.Property.PropertyType == requestProperty.PropertyType);
                 if (propertyMapper != null)
                     continue;
                 else
                     yield return new PropertyMapperConfigurationBuilder()
-                                                .SetProperty(requestProperty)
+                                                .SetProperty(Value.Type.GetProperty(propertyInfo.Name))
+                                                .SetMappedType(requestProperty.DeclaringType)
+                                                .SetMappedProperty(requestProperty)
                                                 .IgnoreDefaultValue(_ignoreDefaultValues)
                                                 .Build();
 

@@ -67,7 +67,7 @@ namespace Briefcase.Handlers.Builder
 
         public IPropertyConfigBuilder<T, TProp> ThrowErrorIfValueIs(TProp value, string errorMessage = null)
         {
-            Func<T, TProp, bool> thowErrorFun = (entity, prop) => value == null && prop == null || value.Equals(prop);
+            Func<T, TProp, bool> thowErrorFun = (entity, prop) => (value == null && prop == null) || prop == null || prop.Equals(value);
             return ThrowErrorIf(thowErrorFun, errorMessage);
         }
 

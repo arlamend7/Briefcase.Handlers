@@ -12,5 +12,6 @@ namespace Briefcase.Handlers.Builder.Interfaces
         IPropertyMapperConfigurationBuilder IgnoreDefaultValue(bool ignore = false);
         IPropertyMapperConfigurationBuilder SetMappedType(Type type);
         IPropertyMapperConfigurationBuilder SetProperty(PropertyInfo property);
+        IPropertyMapperConfigurationBuilder SetMappedProperty(PropertyInfo property);
     }
 }
