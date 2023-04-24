@@ -95,7 +95,10 @@ namespace Briefcase.Handlers.Operations.Base
 
         private bool IsInvalid(PropertyInfo propertyInfo, object newValue)
         {
-            if (newValue == null && (Nullable.GetUnderlyingType(propertyInfo.PropertyType) == null || propertyInfo.PropertyType.IsClass))
+            if (propertyInfo.PropertyType.IsClass && newValue == null)
+                return false;
+
+            if (newValue == null && Nullable.GetUnderlyingType(propertyInfo.PropertyType) == null)
                 return true;
 
             return false;
