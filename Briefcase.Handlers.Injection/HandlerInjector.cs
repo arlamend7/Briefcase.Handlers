@@ -65,9 +65,9 @@ namespace Briefcase.Handlers.Injection
                              .WhereImplementItAsOneOfInterface();
 
 
-            Func<Type, IServiceProvider, MapperConfiguration> mapperBuilderFunc = (item, sericeProvider) =>
+            Func<Type, Type, IServiceProvider, MapperConfiguration> mapperBuilderFunc = (item, type, sericeProvider) =>
             {
-                var service = sericeProvider.GetService(item);
+                var service = sericeProvider.GetService(type);
                 var interfaceImplementation = typeof(IHandlerMapperConfigurarion<,>).MakeGenericType(item.GenericTypeArguments);
                 return interfaceImplementation.GetMethod("Build").Invoke(service, new object[0]) as MapperConfiguration;
             };
@@ -77,8 +77,9 @@ namespace Briefcase.Handlers.Injection
                 foreach (var item in interfaces)
                 {
                     services
+                        .AddSingleton(type)
                         .AddSingleton(item, type)
-                        .AddSingleton(typeof(MapperConfiguration), x => mapperBuilderFunc(item, x));
+                        .AddSingleton(typeof(MapperConfiguration), x => mapperBuilderFunc(item ,type, x));
                 }
             }
 
@@ -89,7 +90,7 @@ namespace Briefcase.Handlers.Injection
         {
             foreach (var item in allTypesWithCustomConfiguration)
             {
-                services.AddScoped(typeof(IHandler<>).MakeGenericType(item), x =>
+                services.AddSingleton(typeof(IHandler<>).MakeGenericType(item), x =>
                 {
                     var specificConfiguration = typeof(HandlerConfiguration<>).MakeGenericType(item);
 
