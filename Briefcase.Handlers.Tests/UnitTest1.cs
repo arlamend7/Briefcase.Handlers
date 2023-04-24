@@ -149,9 +149,7 @@ namespace Briefcase.Handlers.Tests
         [Fact]
         public void Test1()
         {
-        2
-
-            IHandler<Person> personHandler = handlers.Get<Person>();
+            IHandler<Person> personHandler = null;
 
             IHandlerOperation<Person> operation = personHandler.Create();
 

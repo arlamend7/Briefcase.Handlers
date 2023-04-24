@@ -10,11 +10,12 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Briefcase.System" Version="0.1.5" />
 		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Briefcase.Handlers\Briefcase.Handlers.csproj" />
+	  <ProjectReference Include="..\Briefcase.Handlers\Briefcase.Handlers.csproj" />
 	</ItemGroup>
 	<Target Name="Configurator" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe" ContinueOnError="true" />

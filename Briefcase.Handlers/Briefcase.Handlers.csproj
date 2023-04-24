@@ -12,6 +12,9 @@
 	<Target Name="Configurator" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe" ContinueOnError="true" />
 	</Target>
+	<ItemGroup>
+	  <PackageReference Include="Briefcase.System" Version="0.1.5" />
+	</ItemGroup>
 	<!--<Target Name="docfier" AfterTargets="Build">
 		<Exec command="..\\..\\Applications\\Briefcase\\bin\\Debug\\net6.0\\Briefcase.Configurator.exe"  ContinueOnError="true" />
 	</Target>-->
