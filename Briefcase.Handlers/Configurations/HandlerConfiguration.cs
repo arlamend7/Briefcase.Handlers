@@ -27,6 +27,9 @@ namespace Briefcase.Handlers.Configurations
             Type = editHandler.Type;
             Properties = editHandler?.Properties;
             EditMappers = editHandler.EditMappers;
+            OnCreate = editHandler.OnCreate;
+            OnEdit = editHandler.OnEdit;
+            OnDelete = editHandler.OnDelete;
         }
     }
 }

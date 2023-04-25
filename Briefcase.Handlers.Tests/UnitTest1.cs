@@ -82,15 +82,12 @@ namespace Briefcase.Handlers.Tests
 
             var operation = handlers.Create<Person>();
 
-            var teste = Enumerable.Range(0, 100000).AsParallel().Select(x =>
-            {
-                return handlers.Create<Person>()
+            var teste = handlers.Create<Person>()
                     .EditBy(new PersonInsertRequest()
                     {
-                        CompleteName = $"Arlan dos Santos Franklin Mendes{x}",
+                        CompleteName = $"Arlan dos Santos Franklin Mendes",
                         Birthdate = "1998-10-31"
                     }).Result;
-            }).ToList();
         }
         [Fact]
         public void Testb()

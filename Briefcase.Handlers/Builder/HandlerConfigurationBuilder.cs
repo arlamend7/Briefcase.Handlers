@@ -20,7 +20,6 @@ namespace Briefcase.Handlers.Builder
         : HandlerConfigurationBuilder,
         IHandlerConfigurationBuilder<T> where T : class, new()
     {
-        public new HandlerConfiguration<T> Value => new HandlerConfiguration<T>(base.Value);
         public IHandlerConfigurationBuilder<T> For<TProp>(Expression<Func<T, TProp>> expression, Func<IPropertyConfigInfoBuilder<T, TProp>, bool> configurationMethod)
         {
             PropertyConfigurationBuilder<T, TProp> propertyEditConfig = new PropertyConfigurationBuilder<T, TProp>();
