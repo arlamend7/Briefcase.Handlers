@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Briefcase.Handlers.Operations.Base.Interfaces
 {
-    public interface IHandlerResult<T> 
+    public interface IHandlerResult<T> : IDisposable
     {
         IEnumerable<PropertyInfo> EditedProperties { get; }
         IInteractable<IHandled> For(PropertyInfo property);
