@@ -146,9 +146,13 @@ namespace Briefcase.Handlers.Tests
         [Fact]
         public void Test1()
         {
-            IHandler<Person> personHandler = null;
+            var service = new ServiceCollection()
+                          .UseHandlers(this.GetType().Assembly);
+            var serviceProvider = service.BuildServiceProvider();
 
-            IHandlerOperation<Person> operation = personHandler.Create();
+            IHandler handlers = serviceProvider.GetService<IHandler>();
+
+            IHandlerOperation<Person> operation = handlers.Create<Person>();
 
             var id = Guid.NewGuid();
             operation.Edit(x =>
